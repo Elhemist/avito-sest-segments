@@ -13,7 +13,7 @@ type Segment interface {
 type User interface {
 	AddUser(user segment.User) error
 	CheckUser(user segment.User) ([]segment.Segment, error)
-	AddSegments(user segment.User, servise segment.Segment) (int, error)
+	AddSegments(user segment.SegmentsToUpdate) error
 }
 type ActiveSegment interface {
 	AddActiveSegment(segment.ActiveSegment) (segment.ActiveSegment, error)

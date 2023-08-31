@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	activeSegmentsTable = "activeSegments"
+	activeSegmentsTable = "active_Segments"
 	segmentTable        = "segments"
 	userTable           = "users"
 )
@@ -47,7 +47,7 @@ func InitTables(db *sqlx.DB) {
 		name    varchar(255)    UNIQUE not null
 	);
 	CREATE TABLE active_segments(
-		userId      INTEGER,
+		userId      INTEGER,	REFERENCES users (id) ON DELETE CASCADE,
 		serviceId   INTEGER     REFERENCES segments (id) ON DELETE CASCADE,
 		PRIMARY KEY(userId, serviceId)
 	);
