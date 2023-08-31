@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	activeSegments = "activeSegments"
-	segmentTable   = "segments"
-	userTable      = "users"
+	activeSegmentsTable = "activeSegments"
+	segmentTable        = "segments"
+	userTable           = "users"
 )
 
 type Config struct {
@@ -32,4 +32,44 @@ func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 		return nil, err
 	}
 	return db, nil
+}
+
+func InitTables(db *sqlx.DB) {
+	query := `
+	DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS segments;
+    DROP TABLE IF EXISTS active_segments;
+	CREATE TABLE users(
+		id      numeric              primary key
+	);
+	CREATE TABLE segments(
+		id      serial          primary key,
+		name    varchar(255)    UNIQUE not null
+	);
+	CREATE TABLE active_segments(
+		userId      INTEGER,
+		serviceId   INTEGER     REFERENCES segments (id) ON DELETE CASCADE,
+		PRIMARY KEY(userId, serviceId)
+	);
+	`
+	_, _ = db.Exec(query)
+}
+func FillTables(db *sqlx.DB) {
+	query := `
+	INSERT INTO users(id) VALUES (12);
+	INSERT INTO users(id) VALUES (13);
+	INSERT INTO users(id) VALUES (14);
+	INSERT INTO users(id) VALUES (15);
+	INSERT INTO users(id) VALUES (16);
+	INSERT INTO users(id) VALUES (17);
+	INSERT INTO users(id) VALUES (18);
+	
+	INSERT INTO segments(name) VALUES ('Sale50');
+	INSERT INTO segments(name) VALUES ('Sale60');
+	INSERT INTO segments(name) VALUES ('Sale70');
+	INSERT INTO segments(name) VALUES ('Sale80');
+	INSERT INTO segments(name) VALUES ('Sale90');
+	INSERT INTO segments(name) VALUES ('Sale');
+	`
+	_, _ = db.Exec(query)
 }

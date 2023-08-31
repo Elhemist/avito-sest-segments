@@ -1,42 +1,43 @@
 package handler
 
 import (
-	segment "avito-sest-segments/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) AddUser(c *gin.Context) {
-	var input segment.User
+type Segment struct {
+	Name string
+}
+
+func (h *Handler) CreateSegment(c *gin.Context) {
+	var input Segment
 	if err := c.BindJSON(&input); err != nil {
+
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	fmt.Println(input)
-	err := h.services.User.AddUser(input)
+	id, err := h.services.Segment.CreateSegment(input.Name)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-
-	////////////////////////////////!!!!!!!!!!!!!!!!!!!
-	c.JSON(http.StatusOK, gin.H{
-		"message": "User created",
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"id": id,
 	})
 }
-func (h *Handler) CheckUser(c *gin.Context) {
-	var input segment.User
+func (h *Handler) DeleteSegment(c *gin.Context) {
+	var input Segment
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	user, err := h.services.User.CheckUser(input)
+	err := h.services.Segment.DeleteSegment(input.Name)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, user)
-
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Segment deleted",
+	})
 }

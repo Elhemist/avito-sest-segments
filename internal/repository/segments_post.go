@@ -15,18 +15,24 @@ func NewSegmentPostgres(db *sqlx.DB) *SegmentPostgres {
 	return &SegmentPostgres{db: db}
 
 }
-func (r *SegmentPostgres) CreateSegment(seg segment.Segment) (segment.Segment, error) {
+func (r *SegmentPostgres) CreateSegment(name string) (int, error) {
 	var userSeg segment.Segment
-	if seg == (segment.Segment{}) {
+	if name != "" {
 		query := fmt.Sprintf("INSERT INTO %s (name) VALUES ($1)", segmentTable)
-		_, err := r.db.Exec(query, seg.Name)
+		_, err := r.db.Exec(query, name)
 		if err != nil {
-			return userSeg, fmt.Errorf("Segment isert error")
+			return userSeg.Id, fmt.Errorf("Segment isert error")
 		}
 		query = fmt.Sprintf("SELECT id, name FROM %s WHERE name=$1 ", segmentTable)
-		err = r.db.Select(&userSeg, query, seg.Name)
-		return userSeg, err
+		err = r.db.Select(&userSeg, query, name)
+		return userSeg.Id, err
 	} else {
-		return userSeg, fmt.Errorf("Empty name")
+		return userSeg.Id, fmt.Errorf("Empty name")
 	}
+}
+func (r *SegmentPostgres) DeleteSegment(name string) error {
+	query := fmt.Sprintf("DELETE FROM %s WHERE name = $1", segmentTable)
+	_, err := r.db.Exec(query, name)
+
+	return err
 }

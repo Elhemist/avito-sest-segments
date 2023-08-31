@@ -1,10 +1,15 @@
 package main
 
 import (
+	segment "avito-sest-segments"
+	"avito-sest-segments/internal/handler"
 	"avito-sest-segments/internal/repository"
+	"avito-sest-segments/internal/service"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -22,11 +27,18 @@ func main() {
 		DBName:   viper.GetString("db.dbname"),
 		SSLmode:  viper.GetString("db.sslmode"),
 	})
-
 	if err != nil {
 		logrus.Fatalf("DB init fail: %s", err.Error())
 	}
-	//TODO: Init server
+
+	repos := repository.NewRepository(db)
+	service := service.NewService(repos)
+	handlers := handler.NewHandler(service)
+	repository.InitTables(db)
+	srv := new(segment.Server)
+	if err := srv.Start(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+		logrus.Fatalf("Running error: %s", err.Error())
+	}
 
 }
 func InitConfig() error {

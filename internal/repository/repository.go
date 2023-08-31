@@ -7,7 +7,8 @@ import (
 )
 
 type Segment interface {
-	CreateSegment(segment.Segment) (segment.Segment, error)
+	CreateSegment(string) (int, error)
+	DeleteSegment(string) error
 }
 type User interface {
 	AddUser(segment.User) error

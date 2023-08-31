@@ -6,12 +6,13 @@ import (
 )
 
 type Segment interface {
-	CreateSegment(thisSegment segment.Segment) (int, error)
+	CreateSegment(string) (int, error)
+	DeleteSegment(string) error
 }
 
 type User interface {
-	AddUser(user segment.User) (segment.User, error)
-	CheckUser(user segment.User) (segment.User, error)
+	AddUser(user segment.User) error
+	CheckUser(user segment.User) ([]segment.Segment, error)
 }
 type ActiveSegment interface {
 	AddActiveSegment(segment.ActiveSegment) (segment.ActiveSegment, error)
@@ -25,7 +26,7 @@ type Service struct {
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		Section: NewSectionService(repos.Section),
+		Segment: NewSegmentService(repos.Segment),
 		User:    NewUserService(repos.User),
 	}
 }
