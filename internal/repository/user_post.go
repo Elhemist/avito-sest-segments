@@ -41,3 +41,12 @@ func (r *UserPostgres) CheckUser(user segment.User) ([]segment.Segment, error) {
 	//todo!!
 	return userSeg, err
 }
+func (r *UserPostgres) AddSegments(user segment.User, servise segment.Segment) (int, error) {
+	if user != (segment.User{}) {
+		query := fmt.Sprintf("INSERT INTO %s (id) VALUES ($1)", userTable)
+		_, err := r.db.Exec(query, user.Id)
+		return 0, err
+	} else {
+		return 0, fmt.Errorf("Empty name")
+	}
+}

@@ -20,3 +20,8 @@ func (s *UserService) CheckUser(user segment.User) ([]segment.Segment, error) {
 
 	return s.repo.CheckUser(user)
 }
+
+func (s *UserService) AddSegments(user segment.User, servise segment.Segment) (int, error) {
+
+	return s.repo.AddSegments(user, servise)
+}

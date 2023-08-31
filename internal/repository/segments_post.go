@@ -33,7 +33,12 @@ func (r *SegmentPostgres) CreateSegment(name string) (int, error) {
 }
 func (r *SegmentPostgres) DeleteSegment(name string) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE name = $1", segmentTable)
-	_, err := r.db.Exec(query, name)
+	res, err := r.db.Exec(query, name)
+	rowsAffected, _ := res.RowsAffected()
+	if rowsAffected == 0 {
 
+		return fmt.Errorf("No rows to delete")
+
+	}
 	return err
 }
