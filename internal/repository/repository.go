@@ -7,11 +7,11 @@ import (
 )
 
 type Segment interface {
-	CreateSegment(segment.Segment) (int, error)
+	CreateSegment(segment.Segment) (segment.Segment, error)
 }
 type User interface {
-	AddUser(segment.User) (segment.User, error)
-	CheckUser(segment.User) (segment.User, error)
+	AddUser(segment.User) error
+	CheckUser(segment.User) ([]segment.Segment, error)
 }
 type ActiveSegment interface {
 	AddActiveSegment(segment.ActiveSegment) (segment.ActiveSegment, error)
