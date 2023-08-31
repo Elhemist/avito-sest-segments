@@ -16,15 +16,16 @@ func NewSegmentPostgres(db *sqlx.DB) *SegmentPostgres {
 
 }
 func (r *SegmentPostgres) CreateSegment(name string) (int, error) {
+
 	var userSeg segment.Segment
 	if name != "" {
 		query := fmt.Sprintf("INSERT INTO %s (name) VALUES ($1)", segmentTable)
 		_, err := r.db.Exec(query, name)
 		if err != nil {
-			return userSeg.Id, fmt.Errorf("Segment isert error")
+			return userSeg.Id, fmt.Errorf("Segment insert error")
 		}
 		query = fmt.Sprintf("SELECT id, name FROM %s WHERE name=$1 ", segmentTable)
-		err = r.db.Select(&userSeg, query, name)
+		err = r.db.Get(&userSeg, query, name)
 		return userSeg.Id, err
 	} else {
 		return userSeg.Id, fmt.Errorf("Empty name")

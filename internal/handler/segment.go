@@ -22,8 +22,8 @@ func (h *Handler) CreateSegment(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"id": id,
+	c.JSON(http.StatusOK, gin.H{
+		"SegmentId": id,
 	})
 }
 func (h *Handler) DeleteSegment(c *gin.Context) {

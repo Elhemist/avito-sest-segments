@@ -17,5 +17,4 @@ func (s *SectionService) CreateSegment(name string) (int, error) {
 }
 func (s *SectionService) DeleteSegment(name string) error {
 	return s.repo.DeleteSegment(name)
-
 }
