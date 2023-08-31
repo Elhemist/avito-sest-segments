@@ -23,24 +23,20 @@ func (h *Handler) AddUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"userId":  user.Id,
-		"Balance": user.Balance,
+		"userId": user.Id,
 	})
 }
-func (h *Handler) UpdateBalance(c *gin.Context) {
-	var input segment.User
+func (h *Handler) CheckUser(c *gin.Context) {
+	var input []segment.Segment
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	user, err := h.services.User.UpdateUser(input)
+	user, err := h.services.User.CheckUser(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"userId":  user.Id,
-		"Balance": user.Balance,
-	})
+	c.JSON(http.StatusOK, user)
 
 }

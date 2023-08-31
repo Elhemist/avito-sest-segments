@@ -16,8 +16,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	user := router.Group("/user")
 	{
-		user.GET("/", h.AddUser())
-		user.POST("/", h.UpdateBalance)
+		user.GET("/", h.AddUser)
+		user.POST("/", h.CheckUser)
 	}
 	product := router.Group("/order")
 	{
