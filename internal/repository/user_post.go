@@ -16,8 +16,6 @@ func NewUserPostgres(db *sqlx.DB) *UserPostgres {
 }
 
 func (r *UserPostgres) AddUser(user segment.User) error {
-
-	fmt.Println(3)
 	if user != (segment.User{}) {
 		query := fmt.Sprintf("INSERT INTO %s (id) VALUES ($1)", userTable)
 		_, err := r.db.Exec(query, user.Id)
