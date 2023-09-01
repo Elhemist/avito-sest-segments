@@ -14,20 +14,6 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
-//	type Segment interface {
-//		CreateSegment(segment.Segment) (segment.Segment, error)
-//		DeleteSegment(string) error
-//	}
-//
-//	type User interface {
-//		AddUser(segment.User) error
-//		CheckUser(segment.User) ([]segment.Segment, error)
-//	}
-//
-//	type ActiveSegment interface {
-//		AddActiveSegment(segment.ActiveSegment) (segment.ActiveSegment, error)
-//		DeleteActiveSegment(segment.ActiveSegment) error
-//	}
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 

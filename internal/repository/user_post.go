@@ -42,11 +42,9 @@ func (r *UserPostgres) CheckUser(user segment.User) ([]segment.Segment, error) {
 	return userSeg, err
 }
 func (r *UserPostgres) AddSegments(segId int, userId int) error {
-	fmt.Println(userId, segId)
 	query := fmt.Sprintf("INSERT INTO %s (userId, serviceId) VALUES ($1, $2)", activeSegmentsTable)
 	_, err := r.db.Exec(query, userId, segId)
 
-	fmt.Println(err)
 	if err != nil {
 		return err
 	}
@@ -81,7 +79,6 @@ func (r *UserPostgres) ExistUser(userId int) error {
 	var res int
 	query := fmt.Sprintf("SELECT id FROM %s WHERE id =$1", userTable)
 	err := r.db.Get(&res, query, userId)
-	fmt.Println(res)
 	if res == 0 {
 		return fmt.Errorf("No such user")
 

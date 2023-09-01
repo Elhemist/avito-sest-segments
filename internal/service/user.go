@@ -24,7 +24,6 @@ func (s *UserService) CheckUser(user segment.User) ([]segment.Segment, error) {
 
 func (s *UserService) AddSegments(input segment.SegmentsToUpdate) error {
 	var err error
-	fmt.Println("fuckTheDuck")
 	err = s.repo.ExistUser(input.UserId)
 	if err != nil {
 		return err
@@ -32,14 +31,11 @@ func (s *UserService) AddSegments(input segment.SegmentsToUpdate) error {
 	for _, i := range input.Delete {
 		fmt.Print(i, "  ")
 		segid, err := s.repo.GetSegmentByName(i)
-		fmt.Println(segid)
-		fmt.Println(err)
 		if err != nil {
 			return err
 		}
 		err = s.repo.DeleteActiveSegment(segid, input.UserId)
 
-		fmt.Println(err)
 		if err != nil {
 			return err
 		}
