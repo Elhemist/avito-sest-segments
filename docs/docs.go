@@ -303,6 +303,65 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/user/part": {
+            "patch": {
+                "description": "Add part of users to segment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "GetPartUsers",
+                "operationId": "add-part",
+                "parameters": [
+                    {
+                        "description": "Segment info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/segment.SegmentsPartAdd"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.resp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -346,6 +405,17 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "segment.SegmentsPartAdd": {
+            "type": "object",
+            "properties": {
+                "part": {
+                    "type": "integer"
+                },
+                "segName": {
+                    "type": "string"
                 }
             }
         },

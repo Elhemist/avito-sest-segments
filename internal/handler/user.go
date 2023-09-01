@@ -113,7 +113,7 @@ func (h *Handler) AddSegments(c *gin.Context) {
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /user/ [patch]
+// @Router /user/part [patch]
 func (h *Handler) GetPartUsers(c *gin.Context) {
 	var input segment.SegmentsPartAdd
 	if err := c.BindJSON(&input); err != nil {

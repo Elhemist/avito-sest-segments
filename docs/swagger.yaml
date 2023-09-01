@@ -27,6 +27,13 @@ definitions:
           type: string
         type: array
     type: object
+  segment.SegmentsPartAdd:
+    properties:
+      part:
+        type: integer
+      segName:
+        type: string
+    type: object
   segment.SegmentsToUpdate:
     properties:
       segToAdd:
@@ -242,6 +249,45 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: AddUser
+      tags:
+      - user
+  /user/part:
+    patch:
+      consumes:
+      - application/json
+      description: Add part of users to segment
+      operationId: add-part
+      parameters:
+      - description: Segment info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/segment.SegmentsPartAdd'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.resp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: GetPartUsers
       tags:
       - user
 swagger: "2.0"
