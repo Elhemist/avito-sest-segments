@@ -16,11 +16,11 @@ type SegmentId struct {
 // @Summary CreateSegment
 // @Tags segment
 // @Description Add new segment to base
-// @ID check-order
+// @ID create-seg
 // @Accept  json
 // @Produce  json
 // @Param input body Segment true "Segment name"
-// @Success 200 {object} atest.User
+// @Success 200 {object} SegmentId
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -45,11 +45,11 @@ func (h *Handler) CreateSegment(c *gin.Context) {
 // @Summary DeleteSegment
 // @Tags segment
 // @Description Delete segment from the base
-// @ID check-order
+// @ID delete-seg
 // @Accept  json
 // @Produce  json
 // @Param input body Segment true "Segment name"
-// @Success 200 {string} "Segment deleted"
+// @Success 200 {string} string    "Segment deleted"
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse

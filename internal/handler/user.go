@@ -10,11 +10,11 @@ import (
 // @Summary AddUser
 // @Tags user
 // @Description Add user to the base
-// @ID check-order
+// @ID add-user
 // @Accept  json
 // @Produce  json
 // @Param input body segment.User true "User id"
-// @Success 200 {string} "User created"
+// @Success 200 {string} string    "User created"
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -40,11 +40,11 @@ func (h *Handler) AddUser(c *gin.Context) {
 // @Summary CheckUser
 // @Tags user
 // @Description Get all segments for user
-// @ID check-order
+// @ID check-user
 // @Accept  json
 // @Produce  json
 // @Param input body segment.User true "User id"
-// @Success 200 {[]string} "User created"
+// @Success 200 {[]string} []string    "User created"
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -70,11 +70,11 @@ func (h *Handler) CheckUser(c *gin.Context) {
 // @Summary AddSegments
 // @Tags user
 // @Description Add segments to user
-// @ID check-order
+// @ID add-segment
 // @Accept  json
 // @Produce  json
 // @Param input body segment.SegmentsToUpdate true "Segments info"
-// @Success 200 {string} "Done"
+// @Success 200 {string} string    "Done"
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse

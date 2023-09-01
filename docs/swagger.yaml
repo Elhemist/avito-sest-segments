@@ -1,0 +1,146 @@
+basePath: /
+definitions:
+  handler.Segment:
+    properties:
+      segName:
+        type: string
+    type: object
+  handler.SegmentId:
+    properties:
+      SegmentId:
+        type: integer
+    type: object
+  handler.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  segment.User:
+    properties:
+      userId:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Реализация тестового задания avito go backend-trainee-assignment-2023.
+  title: Avito segment task Api
+  version: "1.0"
+paths:
+  /segment/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete segment from the base
+      operationId: delete-seg
+      parameters:
+      - description: Segment name
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.Segment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Segment deleted
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: DeleteSegment
+      tags:
+      - segment
+    post:
+      consumes:
+      - application/json
+      description: Add new segment to base
+      operationId: create-seg
+      parameters:
+      - description: Segment name
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.Segment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.SegmentId'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: CreateSegment
+      tags:
+      - segment
+  /user/:
+    post:
+      consumes:
+      - application/json
+      description: Add user to the base
+      operationId: add-user
+      parameters:
+      - description: User id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/segment.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: AddUser
+      tags:
+      - user
+swagger: "2.0"
