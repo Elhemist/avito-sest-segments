@@ -75,6 +75,19 @@ curl --request DELETE \
 	"segName": "sale10"
 }'
 ```
-
+## Метод добавления части пользователей в сегмент
+Данный метод принимает процент пользователей для добавления(part) и slug(segName) сегмента. Ответом метода является сообщение о успешности удаления.
+### Delete "/segment/"
+### Пример
+```bash
+curl --request PATCH \
+  --url http://localhost:8080/user/part \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: Insomnia/2023.5.7' \
+  --data '{
+	"part": 50,
+	"segName": "sale10"
+}'
+```
 
 
