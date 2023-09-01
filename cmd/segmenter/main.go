@@ -12,6 +12,13 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// @title Avito segment task Api
+// @version 1.0
+// @description Реализация тестового задания avito go backend-trainee-assignment-2023.
+
+// @host localhost:8080
+// @BasePath /
+
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 	logrus.Error("Config init error: starting")
