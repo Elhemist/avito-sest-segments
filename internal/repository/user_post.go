@@ -24,25 +24,15 @@ func (r *UserPostgres) AddUser(user segment.User) error {
 		return fmt.Errorf("Empty name")
 	}
 }
-func (r *UserPostgres) CheckUser(user segment.User) ([]segment.Segment, error) {
-
-	//todo!!
+func (r *UserPostgres) CheckUser(user segment.User) ([]int, error) {
 	var activeSeg []int
-	var userSeg []segment.Segment
-
-	query := fmt.Sprintf("SELECT segmentId FROM activeSegments WHERE userId=$1 ")
+	query := fmt.Sprintf("SELECT segmentId FROM %s WHERE userId=$1 ", activeSegmentsTable)
 	err := r.db.Select(&activeSeg, query, user.Id)
-	if err != nil {
-		for _, x := range activeSeg {
-			query = fmt.Sprintf("SELECT id, name FROM %s WHERE id=$1 ", segmentTable)
-			err = r.db.Select(&activeSeg, query, x)
-		}
-	}
-	//todo!!
-	return userSeg, err
+
+	return activeSeg, err
 }
 func (r *UserPostgres) AddSegments(segId int, userId int) error {
-	query := fmt.Sprintf("INSERT INTO %s (userId, serviceId) VALUES ($1, $2)", activeSegmentsTable)
+	query := fmt.Sprintf("INSERT INTO %s (userId, segmentId) VALUES ($1, $2)", activeSegmentsTable)
 	_, err := r.db.Exec(query, userId, segId)
 
 	if err != nil {
@@ -65,7 +55,7 @@ func (r *UserPostgres) GetSegmentByName(name string) (int, error) {
 }
 
 func (r *UserPostgres) DeleteActiveSegment(segId int, userId int) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE userId =$1 AND serviceId = $2", activeSegmentsTable)
+	query := fmt.Sprintf("DELETE FROM %s WHERE userId =$1 AND segmentId = $2", activeSegmentsTable)
 	res, err := r.db.Exec(query, userId, segId)
 	rowsAffected, _ := res.RowsAffected()
 	if rowsAffected == 0 {
@@ -84,4 +74,18 @@ func (r *UserPostgres) ExistUser(userId int) error {
 
 	}
 	return err
+}
+
+func (r *UserPostgres) GetSegmentById(id int) (string, error) {
+	var userSeg string
+	query := fmt.Sprintf("SELECT name FROM %s WHERE id=$1 ", segmentTable)
+	err := r.db.Get(&userSeg, query, id)
+	if err != nil {
+		return userSeg, err
+	}
+	if userSeg == "" {
+		return userSeg, fmt.Errorf("No segment with %v in table", id)
+	}
+
+	return userSeg, err
 }

@@ -36,20 +36,20 @@ func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 
 func InitTables(db *sqlx.DB) {
 	query := `
+    DROP TABLE IF EXISTS active_segments;
 	DROP TABLE IF EXISTS users;
     DROP TABLE IF EXISTS segments;
-    DROP TABLE IF EXISTS active_segments;
 	CREATE TABLE users(
-		id      numeric              primary key
+		id         numeric         primary key
 	);
 	CREATE TABLE segments(
-		id      serial          primary key,
-		name    varchar(255)    UNIQUE not null
+		id         serial          primary key,
+		name       varchar(255)    UNIQUE not null
 	);
 	CREATE TABLE active_segments(
-		userId      INTEGER,	REFERENCES users (id) ON DELETE CASCADE,
-		serviceId   INTEGER     REFERENCES segments (id) ON DELETE CASCADE,
-		PRIMARY KEY(userId, serviceId)
+		userId     INTEGER         REFERENCES users (id) ON DELETE CASCADE,
+		segmentId  INTEGER         REFERENCES segments (id) ON DELETE CASCADE,
+		PRIMARY KEY(userId, segmentId)
 	);
 	`
 	_, _ = db.Exec(query)

@@ -7,7 +7,7 @@ import (
 )
 
 type Segment struct {
-	Name string
+	Name string `json:"segName"`
 }
 
 func (h *Handler) CreateSegment(c *gin.Context) {

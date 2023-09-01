@@ -3,7 +3,6 @@ package service
 import (
 	repository "avito-sest-segments/internal/repository"
 	segment "avito-sest-segments/models"
-	"fmt"
 )
 
 type UserService struct {
@@ -17,9 +16,21 @@ func NewUserService(repo repository.User) *UserService {
 func (s *UserService) AddUser(user segment.User) error {
 	return s.repo.AddUser(user)
 }
-func (s *UserService) CheckUser(user segment.User) ([]segment.Segment, error) {
+func (s *UserService) CheckUser(user segment.User) ([]string, error) {
+	var userSegments []string
+	segIdArr, err := s.repo.CheckUser(user)
+	if err != nil {
+		return userSegments, err
+	}
+	for _, segId := range segIdArr {
+		segName, err := s.repo.GetSegmentById(segId)
+		if err != nil {
+			return userSegments, err
+		}
+		userSegments = append(userSegments, segName)
 
-	return s.repo.CheckUser(user)
+	}
+	return userSegments, err
 }
 
 func (s *UserService) AddSegments(input segment.SegmentsToUpdate) error {
@@ -29,7 +40,6 @@ func (s *UserService) AddSegments(input segment.SegmentsToUpdate) error {
 		return err
 	}
 	for _, i := range input.Delete {
-		fmt.Print(i, "  ")
 		segid, err := s.repo.GetSegmentByName(i)
 		if err != nil {
 			return err

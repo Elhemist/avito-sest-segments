@@ -42,15 +42,3 @@ func (r *SegmentPostgres) DeleteSegment(name string) error {
 	}
 	return err
 }
-
-// func (r *SegmentPostgres) GetSegmentById(id string) error {
-// 	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", segmentTable)
-// 	res, err := r.db.Exec(query, id)
-// 	rowsAffected, _ := res.RowsAffected()
-// 	if rowsAffected == 0 {
-
-// 		return fmt.Errorf("No rows to delete")
-
-// 	}
-// 	return err
-// }

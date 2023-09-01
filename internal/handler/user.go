@@ -2,7 +2,6 @@ package handler
 
 import (
 	segment "avito-sest-segments/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -31,12 +30,14 @@ func (h *Handler) CheckUser(c *gin.Context) {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	user, err := h.services.User.CheckUser(input)
+	segArr, err := h.services.User.CheckUser(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"userSegmentNames": segArr,
+	})
 
 }
 func (h *Handler) AddSegments(c *gin.Context) {
@@ -45,7 +46,6 @@ func (h *Handler) AddSegments(c *gin.Context) {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	fmt.Println(input.Delete)
 	err := h.services.User.AddSegments(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
