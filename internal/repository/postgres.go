@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -49,6 +50,7 @@ func InitTables(db *sqlx.DB) {
 	CREATE TABLE active_segments(
 		userId     INTEGER         REFERENCES users (id) ON DELETE CASCADE,
 		segmentId  INTEGER         REFERENCES segments (id) ON DELETE CASCADE,
+		expiration TIMESTAMP,
 		PRIMARY KEY(userId, segmentId)
 	);
 	`
@@ -72,4 +74,14 @@ func FillTables(db *sqlx.DB) {
 	INSERT INTO segments(name) VALUES ('Sale');
 	`
 	_, _ = db.Exec(query)
+}
+func DeleteExpired(db *sqlx.DB) {
+	query := `DELETE FROM active_segments  WHERE expiration <=now()`
+	for {
+		_, err := db.Exec(query)
+		if err != nil {
+			fmt.Println(err)
+		}
+		time.Sleep(time.Second * 60)
+	}
 }
