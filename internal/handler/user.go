@@ -7,6 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type resp struct {
+	Res string `json:"message"`
+}
+type segResp struct {
+	SegmentNames []string `json:"userSegmentNames"`
+}
+
 // @Summary AddUser
 // @Tags user
 // @Description Add user to the base
@@ -14,7 +21,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param input body segment.User true "User id"
-// @Success 200 {string} string    "User created"
+// @Success 200 {object} resp
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -44,12 +51,11 @@ func (h *Handler) AddUser(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param input body segment.User true "User id"
-// @Success 200 {[]string} []string    "User created"
+// @Success 200 {object} segResp
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
 // @Router /user/ [get]
-
 func (h *Handler) CheckUser(c *gin.Context) {
 	var input segment.User
 	if err := c.BindJSON(&input); err != nil {
@@ -74,12 +80,11 @@ func (h *Handler) CheckUser(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param input body segment.SegmentsToUpdate true "Segments info"
-// @Success 200 {string} string    "Done"
+// @Success 200 {object} resp
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
 // @Router /user/ [patch]
-
 func (h *Handler) AddSegments(c *gin.Context) {
 	var input segment.SegmentsToUpdate
 	if err := c.BindJSON(&input); err != nil {

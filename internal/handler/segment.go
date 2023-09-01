@@ -49,7 +49,7 @@ func (h *Handler) CreateSegment(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param input body Segment true "Segment name"
-// @Success 200 {string} string    "Segment deleted"
+// @Success 200 {object} resp
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse

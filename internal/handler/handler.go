@@ -8,7 +8,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	_ "github.com/Elhemist/avito-sest-segments/docs"
+	_ "avito-sest-segments/docs"
 )
 
 type Handler struct {
