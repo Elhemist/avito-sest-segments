@@ -89,3 +89,9 @@ func (r *UserPostgres) GetSegmentById(id int) (string, error) {
 
 	return userSeg, err
 }
+func (r *UserPostgres) GetPartUsers(per int) ([]int, error) {
+	var userPart []int
+	query := fmt.Sprintf("SELECT id FROM %s ORDER BY RANDOM() LIMIT (SELECT COUNT(*) * $1/100 FROM %s)", userTable, userTable)
+	err := r.db.Select(&userPart, query, per)
+	return userPart, err
+}

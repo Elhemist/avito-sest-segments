@@ -62,3 +62,22 @@ func (s *UserService) AddSegments(input segment.SegmentsToUpdate) error {
 	}
 	return err
 }
+
+// GetPartUsers(per int) ([]int, error)
+func (s *UserService) GetPartUsers(input segment.SegmentsPartAdd) error {
+	pickedUsers, err := s.repo.GetPartUsers(input.Part)
+	if err != nil {
+		return err
+	}
+	segId, err := s.repo.GetSegmentByName(input.SegName)
+	if err != nil {
+		return err
+	}
+	for _, usr := range pickedUsers {
+		err = s.repo.AddSegments(segId, usr)
+		if err != nil {
+			return err
+		}
+	}
+	return err
+}

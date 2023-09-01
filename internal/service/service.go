@@ -14,6 +14,7 @@ type User interface {
 	AddUser(user segment.User) error
 	CheckUser(user segment.User) ([]string, error)
 	AddSegments(user segment.SegmentsToUpdate) error
+	GetPartUsers(input segment.SegmentsPartAdd) error
 }
 type ActiveSegment interface {
 	AddActiveSegment(segment.ActiveSegment) (segment.ActiveSegment, error)

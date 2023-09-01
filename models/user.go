@@ -9,3 +9,8 @@ type SegmentsToUpdate struct {
 	Delete []string `json:"segToDelete"`
 	UserId int      `json:"userId"`
 }
+
+type SegmentsPartAdd struct {
+	Part    int    `json:"part"`
+	SegName string `json:"segName"`
+}

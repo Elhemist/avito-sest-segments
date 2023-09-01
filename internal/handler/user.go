@@ -101,3 +101,31 @@ func (h *Handler) AddSegments(c *gin.Context) {
 		"message": "Done",
 	})
 }
+
+// @Summary GetPartUsers
+// @Tags user
+// @Description Add part of users to segment
+// @ID add-part
+// @Accept  json
+// @Produce  json
+// @Param input body segment.SegmentsPartAdd true "Segment info"
+// @Success 200 {object} resp
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /user/ [patch]
+func (h *Handler) GetPartUsers(c *gin.Context) {
+	var input segment.SegmentsPartAdd
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	err := h.services.User.GetPartUsers(input)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Done",
+	})
+}

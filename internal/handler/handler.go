@@ -28,6 +28,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		user.POST("/", h.AddUser)
 		user.PATCH("/", h.AddSegments)
 		user.GET("/", h.CheckUser)
+		user.PATCH("/part", h.GetPartUsers)
 	}
 	segment := router.Group("/segment")
 	{
