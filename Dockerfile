@@ -11,3 +11,4 @@ RUN go mod download
 RUN go build -o avito-test ./cmd/segmenter/main.go
 
 EXPOSE 8080 8080
+CMD ["./avito-test"]
