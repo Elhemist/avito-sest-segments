@@ -14,7 +14,7 @@ type User interface {
 	AddUser(segment.User) error
 	ExistUser(userId int) error
 	CheckUser(segment.User) ([]int, error)
-	AddSegments(segId int, userId int) error
+	AddSegments(segId int, userId int, expire string) error
 	DeleteActiveSegment(serId int, userId int) error
 	GetSegmentByName(string) (int, error)
 	GetSegmentById(id int) (string, error)

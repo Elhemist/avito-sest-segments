@@ -82,6 +82,6 @@ func DeleteExpired(db *sqlx.DB) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		time.Sleep(time.Second * 60)
+		time.Sleep(time.Second * 5)
 	}
 }

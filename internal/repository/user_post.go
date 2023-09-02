@@ -31,9 +31,15 @@ func (r *UserPostgres) CheckUser(user segment.User) ([]int, error) {
 
 	return activeSeg, err
 }
-func (r *UserPostgres) AddSegments(segId int, userId int) error {
-	query := fmt.Sprintf("INSERT INTO %s (userId, segmentId) VALUES ($1, $2)", activeSegmentsTable)
-	_, err := r.db.Exec(query, userId, segId)
+func (r *UserPostgres) AddSegments(segId int, userId int, expire string) error {
+	var err error
+	if expire == "" {
+		query := fmt.Sprintf("INSERT INTO %s (userId, segmentId) VALUES ($1, $2)", activeSegmentsTable)
+		_, err = r.db.Exec(query, userId, segId)
+	} else {
+		query := fmt.Sprintf("INSERT INTO %s (userId, segmentId, expiration) VALUES ($1, $2, $3)", activeSegmentsTable)
+		_, err = r.db.Exec(query, userId, segId, expire)
+	}
 
 	if err != nil {
 		return err

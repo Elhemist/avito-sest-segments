@@ -51,11 +51,11 @@ func (s *UserService) AddSegments(input segment.SegmentsToUpdate) error {
 		}
 	}
 	for _, i := range input.Add {
-		segid, err := s.repo.GetSegmentByName(i)
+		segid, err := s.repo.GetSegmentByName(i.Name)
 		if err != nil {
 			return err
 		}
-		err = s.repo.AddSegments(segid, input.UserId)
+		err = s.repo.AddSegments(segid, input.UserId, i.ExpireTime)
 		if err != nil {
 			return err
 		}
@@ -74,7 +74,7 @@ func (s *UserService) GetPartUsers(input segment.SegmentsPartAdd) error {
 		return err
 	}
 	for _, usr := range pickedUsers {
-		err = s.repo.AddSegments(segId, usr)
+		err = s.repo.AddSegments(segId, usr, input.ExpireTime)
 		if err != nil {
 			return err
 		}
